@@ -41,5 +41,71 @@ Average	O(n*log n)
 */
 
 
+import java.util.Arrays;
+
 public class MergeSort {
+
+
+    //main fuction to sort the array using Marge Sort
+    static void mergeSort(int []arr){
+
+        if(arr.length<2)
+            return; //Base Case : if array length is 1 or less, it's already sorted.
+
+        //Sub Array
+        int mid = arr.length/2;
+
+        //Create temporary array for left and right sub array
+
+        int [] left = new int [mid];
+        int [] right = new int [arr.length-mid];
+
+        //Copy the element to left and right sub array
+        for (int i = 0; i < mid; i++) {
+            left[i] = arr[i];
+        }
+
+        for (int i = mid; i <arr.length ; i++) {
+            right[i-mid] = arr[i];
+        }
+        // Recursively sort both halves
+        mergeSort(left);
+        mergeSort(right);
+
+        // Merge the sorted halves
+        merge(arr, left, right);
+    }
+
+    static void merge(int [] arr, int [] left, int [] right){
+
+        int i=0,j=0,k=0;
+        //Merge the two arrays while comparing their elements
+        while (i < left.length && j < right.length)
+        {
+            if(left[i] <= right[j])
+            {
+                arr[k++]= left[i++];
+            }else{
+                arr[k++]= right[j++];
+            }
+        }
+        //if there are any remaining element in the left array, add them
+        while (i<left.length)
+        {
+            arr[k++]= left[i++];
+        }
+        //if there are any remaining element in the right array, add them
+        while (j<right.length)
+        {
+            arr[k++]= right[j++];
+        }
+    }
+
+    public static void main(String[] args) {
+        int arr[] = { 6, 5, 12, 10, 9, 1 };
+        //int arr[] = { 6, 5, 12, 10 };
+        System.out.println("Array before Sorting :: " + Arrays.toString(arr));
+        mergeSort(arr);
+        System.out.println("Array before Sorting :: " + Arrays.toString(arr));
+    }
 }
